@@ -34,7 +34,12 @@ def postDist():
     Distance calculator
     """
     r = request.get_json()
-    d = math.sqrt((r["a"][0] - r["b"][0]) ** 2 + (r["a"][1] - r["b"][1]) ** 2)
+    try:
+        d = math.sqrt(
+            (r["a"][0] - r["b"][0]) ** 2 + (r["a"][1] - r["b"][1]) ** 2)
+    except TypeError:
+        print('Check inputs a, b are numbers')
+
     res = {
         "distance": d,
         "a": "[{0},{1}]".format(r["a"][0], r["a"][1]),
