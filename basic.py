@@ -4,6 +4,10 @@ import math
 app = Flask(__name__)
 
 
+@app.route("/")
+def hello():
+    return "Hello, world"
+
 @app.route("/name", methods=["GET"])
 def getName():
     """
@@ -13,7 +17,6 @@ def getName():
         "name": "Tiffany"
     }
     return jsonify(data)
-
 
 @app.route("/hello/<name>", methods=["GET"])
 def getData(name):
@@ -31,15 +34,14 @@ def postDist():
     Distance calculator
     """
     r = request.get_json()
-    d = math.sqrt((r["a"][0] - r["b"][0]) ** 2 + (r["a"][1] - r["b"][0]) ** 2)
+    d = math.sqrt((r["a"][0] - r["b"][0]) ** 2 + (r["a"][1] - r["b"][1]) ** 2)
     res = {
         "distance": d,
         "a": "[{0},{1}]".format(r["a"][0], r["a"][1]),
-        "b": "[{0},{1}]".format(r["b"][0], r["b"][1])
+        "b": "[{0},{1}]".format(r["b"][0], r["b"][1]),
     }
-
     return jsonify(res)
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1")
+    app.run(host="0.0.0.0")
